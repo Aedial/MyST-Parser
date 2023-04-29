@@ -172,6 +172,10 @@ def _attr_to_optparse_option(at: Field, default: Any) -> Tuple[dict, str]:
             "metavar": "<null|int>",
             "validator": _validate_int,
         }, str(default)
+    if at.type == Union[str, type(None)]:
+        return {
+            "metavar": "<null|str>",
+        }, str(default)
     if at.type == Union[Iterable[str], type(None)]:
         return {
             "metavar": "<null|comma-delimited>",

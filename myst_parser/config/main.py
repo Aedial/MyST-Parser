@@ -231,6 +231,14 @@ class MdParserConfig:
         },
     )
 
+    relative_links_base: Optional[str] = dc.field(
+        default=None,
+        metadata={
+            "validator": optional(instance_of(str)),
+            "help": "Path to prepend to relative links",
+        }
+    )
+
     url_schemes: Dict[str, Optional[UrlSchemeType]] = dc.field(
         default_factory=lambda: {
             "http": None,

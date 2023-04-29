@@ -20,7 +20,7 @@ from typing import (
     Sequence,
     cast,
 )
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 
 import jinja2
 import yaml
@@ -950,7 +950,10 @@ class DocutilsRenderer(RendererProtocol):
         uri = cast(str, token.attrGet("href") or "")
         implicit_text: str | None = None
 
-        if conversion is not None:
+        if conversion is None:
+            if self.md_config.relative_links_base is not None:
+                uri = urljoin(self.md_config.relative_links_base, uri)
+        else:
             # implicit_template: str | None = None
             # if isinstance(conversion, (list, tuple)):
             #     href_template, implicit_template = conversion
